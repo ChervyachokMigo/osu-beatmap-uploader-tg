@@ -1,0 +1,24 @@
+{
+  "name": "osu-beatmap-uploader-tg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sequelize/core": "^7.0.0-alpha.10",
+    "colors": "^1.4.0",
+    "fs-extra": "^11.1.0",
+    "md5-file": "^5.0.0",
+    "mysql2": "^2.3.3",
+    "node-telegram-bot-api": "^0.60.0",
+    "osu-api-extended": "^2.5.12",
+    "prebuilt-tdlib": "^0.1008000.0",
+    "tdl": "^7.2.0",
+    "tdl-tdlib-addon": "^1.2.1",
+    "zip-dir": "^2.0.0"
+  }
+}

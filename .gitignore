@@ -1,0 +1,14 @@
+/.git/*
+/node_modules/*
+/_td_database/*
+/_td_files/*
+/beatmaps/*
+/.trash/*
+config.js
+lastbeatmap.txt
+*.osz
+error_file.txt
+test.js
+osu-beatmap-uploader-tg.code-workspace
+lastbeatmap — копия (2).txt
+large_file.txt
