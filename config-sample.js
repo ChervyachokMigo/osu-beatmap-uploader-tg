@@ -4,8 +4,8 @@ module.exports = {
 
     tg_token : '',
 
-    OSU_LOGIN: '', 
-    OSU_PASSWORD: '',
+    OSU_CLIENT_ID: 0, 
+    OSU_APP_KEY: '',
 
     DB_HOST: `localhost`, 
     DB_PORT: `3306`, 
