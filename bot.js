@@ -29,6 +29,7 @@ async function sendImage(url, caption){
         console.log(' E нет бг'.red);
         photoMessage = await bot.sendPhoto(osucharts, no_bg_image, { caption: caption });
     }
+    await new Promise(res=>setTimeout(res, 2000));
     return photoMessage;
 }
 
@@ -40,6 +41,7 @@ async function sendAudio(url){
         console.log(' E невозможно отправить превью'.red);
         previewMessage = false;
     }
+    await new Promise(res=>setTimeout(res, 2000));
     return previewMessage;
 }
 
@@ -66,6 +68,7 @@ async function sendOsz(beatmapset, beatmap_message) {
 
         await new Promise(resolve => setTimeout(resolve, tg_bot_restart_after_error_ms));
     }
+    await new Promise(res=>setTimeout(res, 2000));
 }
 
 exports.sendImage = sendImage;

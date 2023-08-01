@@ -61,7 +61,8 @@ async function main_loop_scanosu(){
                     console.log(' S карта будет пропущена.'.yellow);
                 }
                 console.timeEnd('beatmap folder');
-            }
+            }            
+
         }
 
         console.log('Все карты были просканированы'.yellow);
