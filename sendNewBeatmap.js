@@ -30,11 +30,13 @@ async function sendNewBeatmap(beatmapset, lastfolder) {
 
     powershell_sended_calc_start(beatmapset.osz_filename, lastfolder);
 
-    await sendOsz(beatmapset, {photoMessage, previewMessage});
+    const result = await sendOsz(beatmapset, {photoMessage, previewMessage});
 
     powershell_sended_calc_end();
 
     console.log(']');
+
+    return result;
     
 }
 exports.sendNewBeatmap = sendNewBeatmap;

@@ -1,6 +1,6 @@
 const { v2, auth, tools, v1 } = require ('osu-api-extended');
 
-const { OSU_CLIENT_ID, OSU_APP_KEY, osu_api_error_restart_ms } = require('./config.js');
+const { osu_api_error_restart_ms, OSU_LOGIN, OSU_PASSWORD } = require('./config.js');
 
 module.exports = {
     v2: function (){
@@ -8,7 +8,7 @@ module.exports = {
     },
 
     init_osu: async function (){     
-        var token = await auth.login(OSU_CLIENT_ID, OSU_APP_KEY);
+        var token = await auth.login_lazer(OSU_LOGIN, OSU_PASSWORD);
         if (typeof token.access_token === 'undefined'){
             await new Promise(resolve => setTimeout(resolve, osu_api_error_restart_ms));
             throw new Error('osu not auth. restart');

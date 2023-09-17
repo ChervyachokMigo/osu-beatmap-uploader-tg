@@ -48,9 +48,8 @@ async function sendAudio(url){
 async function sendOsz(beatmapset, beatmap_message) {
     try {
         await bot.sendDocument(osucharts, beatmapset.osz_file_buffer, {}, { contentType: 'x-osu-beatmap-archive', filename: beatmapset.osz_filename });
-        await MYSQL_SAVE(sended_map_db, { beatmapset_id: beatmapset.id }, { beatmapset_id: beatmapset.id });
         fs.writeFileSync('lastbeatmap.txt', beatmapset.localfolder, { encoding: 'utf-8' });
-                
+        return true;
     } catch (e) {
         console.log(' E невозможно отправить карту'.red, beatmapset.id);        
         let absolute_folder_path = `${osusongs}\\${beatmapset.localfolder}`.replaceAll('/','\\');
@@ -63,6 +62,7 @@ async function sendOsz(beatmapset, beatmap_message) {
         await keypress('press any key')
 
         await new Promise(resolve => setTimeout(resolve, tg_bot_restart_after_error_ms));
+        return false;
     }
     await new Promise(res=>setTimeout(res, 3000));
 }

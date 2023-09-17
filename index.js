@@ -7,11 +7,12 @@ const { powershell_call } = require('./powershell.js')
 const { init_osu, get_beatmap_info } = require('./check_map.js');
 
 const { osusongs, osu_api_error_restart_ms } = require('./config.js');
+
 const { prepareDB, GET_VALUES_FROM_OBJECT_BY_KEY , MYSQL_GET_ALL_RESULTS_TO_ARRAY, MYSQL_GET_ALL, MYSQL_SAVE,
     sended_map_db, map_to_download_db, map_not_found, map_too_long } = require('./DB.js');
 
+const { readBeatmap } = require("./readBeatmap");
 const { getLastBeatmap } = require("./getLastBeatmap");
-const { makeOsz } = require("./makeOsz");
 const { sendNewBeatmap } = require("./sendNewBeatmap");
 
 const { exec } = require('child_process');
@@ -19,7 +20,8 @@ const { keypress } = require('./keypress.js');
 
 const path = require('path');
 
-const { readBeatmap } = require("./readBeatmap");
+const zip = require('zip-dir');
+const { escapeString } = require("./tools");
 
 const beatmaps_lists = {
     sended: [],
@@ -27,7 +29,6 @@ const beatmaps_lists = {
     not_found: [],
     too_long: []
 };
-
 
 async function init_beatmap_lists(){
     beatmaps_lists.sended = GET_VALUES_FROM_OBJECT_BY_KEY(MYSQL_GET_ALL_RESULTS_TO_ARRAY(await MYSQL_GET_ALL(sended_map_db)), 'beatmapset_id').sort( (a,b) => a - b);
@@ -99,7 +100,10 @@ async function main_loop_scanosu(){
                 beatmapset = await makeOsz(beatmapset);
 
                 if (beatmapset) {
-                    await sendNewBeatmap(beatmapset, lastfolder);
+                    if (await sendNewBeatmap(beatmapset, lastfolder)){
+                        await MYSQL_SAVE(sended_map_db, { beatmapset_id: beatmapset.id }, { beatmapset_id: beatmapset.id });
+                        beatmaps_lists.sended.push(beatmapset.id);
+                    }
                 }
 
             //}            
@@ -207,6 +211,7 @@ async function readSongFolder(folder_osusongs, folderpath) {
 
             if (!bancho_beatmap_info.beatmaps || bancho_beatmap_info.beatmaps.length == 0) {
                 await MYSQL_SAVE(map_not_found, { beatmapset_id: beatmapset.id }, { beatmapset_id: beatmapset.id });
+                beatmaps_lists.not_found.push(beatmapset.id);
                 console.log(' E нет информации о карте на банчо'.red, beatmapset.id);
                 return undefined;
             }
@@ -235,6 +240,7 @@ async function readSongFolder(folder_osusongs, folderpath) {
                     console.log('local md5', local_beatmap_md5s);
                     console.log(' E карты не совпадают.'.red, beatmapset.id);
                     console.log(' + будет добавлена в список загрузок'.yellow, beatmapset.id);
+                    beatmaps_lists.to_download.push(beatmapset.id);
                     await MYSQL_SAVE(map_to_download_db, { beatmapset_id: beatmapset.id }, { beatmapset_id: beatmapset.id });
                 }
             }
@@ -267,3 +273,23 @@ async function readSongFolder(folder_osusongs, folderpath) {
     console.log(' * папка пуста'.yellow, absolute_folder_path);
     return undefined;
 }
+
+async function makeOsz(beatmapset) {
+    const artist = beatmapset.artist? escapeString(beatmapset.artist).trim() + ' - ': ''; 
+    const title = beatmapset.title? escapeString(beatmapset.title).trim():'';
+    beatmapset.osz_filename = `${beatmapset.id} ${artist}${title}`.substring(0, 56).trim().replaceAll(/[ ]+/gui, ' ') + '.osz';
+
+    console.log(' * создание osz архива карты', beatmapset.osz_filename);
+    console.time('osz create');
+    beatmapset.osz_file_buffer = await zip(osusongs + '/' + beatmapset.localfolder);
+    console.timeEnd('osz create');
+
+    if (beatmapset.osz_file_buffer.length > 50 * 1024 * 1024){
+        console.log(' S карта будет пропущена из-за ограничения телеграмма в 50 мегабайт'.red, beatmapset.id);
+        await MYSQL_SAVE(map_too_long, { beatmapset_id: beatmapset.id }, { beatmapset_id: beatmapset.id });
+        beatmaps_lists.too_long.push(beatmapset.id);
+        return false;
+    }
+    return beatmapset;
+}
+
