@@ -20,6 +20,14 @@ const map_to_download_db = mysql.define ('map_to_download', {
     beatmapset_id: { type: DataTypes.INTEGER, defaultValue: 0 },
 });
 
+const map_not_found = mysql.define ('bancho_not_found', {
+    beatmapset_id: { type: DataTypes.INTEGER, defaultValue: 0 },
+});
+
+const map_too_long = mysql.define ('map_too_long', {
+    beatmapset_id: { type: DataTypes.INTEGER, defaultValue: 0 },
+});
+
 async function prepareDB (){
     try {
         console.log(`База данных`,`Подготовка..`)
@@ -162,5 +170,7 @@ module.exports = {
     GET_VALUES_FROM_OBJECT_BY_KEY: GET_VALUES_FROM_OBJECT_BY_KEY,
 
     sended_map_db: sended_map_db,
-    map_to_download_db: map_to_download_db
+    map_to_download_db: map_to_download_db,
+    map_not_found: map_not_found,
+    map_too_long: map_too_long,
 }

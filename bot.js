@@ -29,7 +29,7 @@ async function sendImage(url, caption){
         console.log(' E нет бг'.red);
         photoMessage = await bot.sendPhoto(osucharts, no_bg_image, { caption: caption });
     }
-    await new Promise(res=>setTimeout(res, 2000));
+    await new Promise(res=>setTimeout(res, 3000));
     return photoMessage;
 }
 
@@ -41,23 +41,19 @@ async function sendAudio(url){
         console.log(' E невозможно отправить превью'.red);
         previewMessage = false;
     }
-    await new Promise(res=>setTimeout(res, 2000));
+    await new Promise(res=>setTimeout(res, 3000));
     return previewMessage;
 }
 
 async function sendOsz(beatmapset, beatmap_message) {
     try {
-        
         await bot.sendDocument(osucharts, beatmapset.osz_file_buffer, {}, { contentType: 'x-osu-beatmap-archive', filename: beatmapset.osz_filename });
-       
-
         await MYSQL_SAVE(sended_map_db, { beatmapset_id: beatmapset.id }, { beatmapset_id: beatmapset.id });
         fs.writeFileSync('lastbeatmap.txt', beatmapset.localfolder, { encoding: 'utf-8' });
                 
     } catch (e) {
         console.log(' E невозможно отправить карту'.red, beatmapset.id);        
         let absolute_folder_path = `${osusongs}\\${beatmapset.localfolder}`.replaceAll('/','\\');
-
 
         fs.appendFileSync('error_file.txt', absolute_folder_path + '\n')
         fs.appendFileSync('error_file.txt', e.toString() + '\n')
@@ -68,7 +64,7 @@ async function sendOsz(beatmapset, beatmap_message) {
 
         await new Promise(resolve => setTimeout(resolve, tg_bot_restart_after_error_ms));
     }
-    await new Promise(res=>setTimeout(res, 2000));
+    await new Promise(res=>setTimeout(res, 3000));
 }
 
 exports.sendImage = sendImage;
