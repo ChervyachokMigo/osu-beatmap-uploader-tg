@@ -1,4 +1,4 @@
-const colors = require('colors');
+require('colors');
 var log = console.log.bind(console)
 module.exports = {
 	progressbar_default: "█",

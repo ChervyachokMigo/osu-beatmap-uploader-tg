@@ -3,8 +3,7 @@ const { powershell_sended_calc_start, powershell_set_filesize, powershell_sended
 const { makeCaption } = require("./makeCaption");
 const { sendImage, sendAudio, sendOsz } = require("./bot");
 
-var colors = require('colors');
-const { keypress } = require('./keypress.js');
+require('colors');
 
 async function sendNewBeatmap(beatmapset, lastfolder) {
     console.log('Данные карты будут отправлены на канал: ', beatmapset.id, '[');

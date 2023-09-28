@@ -1,7 +1,7 @@
 
 const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } = require("./config.js");
 
-const { Sequelize, DataTypes, Op } = require('@sequelize/core');
+const { Sequelize, DataTypes } = require('@sequelize/core');
 
 const mysql = new Sequelize( DB_NAME, DB_USER, DB_PASSWORD, { 
     dialect: `mysql`,

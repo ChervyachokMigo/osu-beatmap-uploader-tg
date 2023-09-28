@@ -1,4 +1,4 @@
-var colors = require('colors');
+require('colors');
 const { get_date_string, GET_VALUES_FROM_OBJECT_BY_KEY } = require("./tools");
 
 function makeCaption(beatmapset, short = 0) {
@@ -38,12 +38,6 @@ function makeCaption(beatmapset, short = 0) {
                 caption += beatmap.difficulty_rating + '★ | ';
             }
             caption += beatmap.md5_hash + '\n';
-            /*caption += beatmap.AR?`▸ AR: ${beatmap.AR} `:'';
-            caption += beatmap.OD?`▸ OD: ${beatmap.OD} `:'';
-            caption += beatmap.CS?`▸ CS: ${beatmap.CS} `:'';
-            caption += beatmap.HP?`▸ HP: ${beatmap.HP}`:'';*/
-            //caption += beatmap.OD?'\n':'';
-            //caption += '\n';
         }
         beatmap_counts++;
     }

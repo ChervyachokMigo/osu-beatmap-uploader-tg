@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const colors = require('colors');
+require('colors');
 
 const { powershell_call } = require('./powershell.js')
 
@@ -14,9 +14,6 @@ const { prepareDB, GET_VALUES_FROM_OBJECT_BY_KEY , MYSQL_GET_ALL_RESULTS_TO_ARRA
 const { readBeatmap } = require("./readBeatmap");
 const { getLastBeatmap } = require("./getLastBeatmap");
 const { sendNewBeatmap } = require("./sendNewBeatmap");
-
-const { exec } = require('child_process');
-const { keypress } = require('./keypress.js');
 
 const path = require('path');
 
@@ -79,23 +76,6 @@ async function main_loop_scanosu(){
                     //console.log(' S карта будет пропущена.'.yellow);
                     continue;
                 }
-
-                /*if (beatmaps_lists.sended.findIndex(b => beatmapset.id === b) > -1){
-                    //console.log(' S карта уже была отправлена'.yellow, beatmapset.id);
-                    continue;
-                }
-                if (beatmaps_lists.to_download.findIndex(b => beatmapset.id === b) > -1){
-                    //console.log(' S карта в списке загрузки'.yellow, beatmapset.id);
-                    continue;
-                }
-                if (beatmaps_lists.not_found.findIndex(b => beatmapset.id === b) > -1){
-                    //console.log(' S о карте нет информации на банчо'.yellow, beatmapset.id);
-                    continue;
-                }
-                if (beatmaps_lists.too_long.findIndex(b => beatmapset.id === b) > -1 ){
-                    //console.log(' S карта будет пропущена из-за ограничения телеграмма в 50 мегабайт'.yellow, beatmapset.id);
-                    continue;
-                }*/
 
                 beatmapset = await makeOsz(beatmapset);
 
@@ -196,7 +176,6 @@ async function readSongFolder(folder_osusongs, folderpath) {
 
         if (beatmapset.beatmap.length > 0 && beatmapset.id > 0) {
             console.log(' * найдено ', beatmapset.beatmap.length, 'карт');
-            let beatmap_versions = GET_VALUES_FROM_OBJECT_BY_KEY(beatmapset.beatmap, 'difficulty');
             console.log(' * запрос информации о карте на банчо', beatmapset.id);
             console.time('bancho request');
             let bancho_beatmap_info = await get_beatmap_info(beatmapset.id);
@@ -242,24 +221,9 @@ async function readSongFolder(folder_osusongs, folderpath) {
                     console.log(' + будет добавлена в список загрузок'.yellow, beatmapset.id);
                     beatmaps_lists.to_download.push(beatmapset.id);
                     await MYSQL_SAVE(map_to_download_db, { beatmapset_id: beatmapset.id }, { beatmapset_id: beatmapset.id });
-                }
-            }
-
-            /*for (let bancho_diff_name of bancho_beatmap_versions) {
-                if (beatmap_versions.indexOf(bancho_diff_name) == -1) {
-                    console.log('bancho md5', bancho_beatmap_md5s);
-                    console.log('local md5', local_beatmap_md5s);
-                    console.log(' E карты не совпадают.'.red, beatmapset.id);
-                    console.log(' * local beatmaps: ', beatmap_versions.join('; '));
-                    console.log(' * bancho beatmaps:', bancho_beatmap_versions.join('; '));
-                    console.log(' + будет добавлена в список загрузок'.yellow, beatmapset.id);
-                    await keypress('press any key')
-                    await MYSQL_SAVE(map_to_download_db, { beatmapset_id: beatmapset.id }, { beatmapset_id: beatmapset.id });
-                    //exec(`explorer.exe "${absolute_folder_path.replaceAll('/','\\')}"`);
-                    
                     return undefined;
                 }
-            }*/
+            }
 
             beatmapset.bancho_beatmap_info = bancho_beatmap_info;
             beatmapset.localfolder = folderpath;

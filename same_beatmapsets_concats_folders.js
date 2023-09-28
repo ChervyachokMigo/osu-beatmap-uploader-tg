@@ -1,9 +1,8 @@
 const fs = require('fs');
 const fse = require('fs-extra')
 const path = require('path');
-const md5File = require('md5-file');
-const { exec } = require('child_process');
-var colors = require('colors');
+
+require('colors');
 
 const { keypress } = require('./keypress.js');
 

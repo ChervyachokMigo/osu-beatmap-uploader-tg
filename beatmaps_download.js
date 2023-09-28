@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require(`path`);
 
-var { v1, v2, mods, tools, auth } = require ('osu-api-extended');
+var { v2 } = require ('osu-api-extended');
 const { init_osu, get_beatmap_info } = require('./check_map.js');
 const { prepareDB, MYSQL_GET_ALL, MYSQL_DELETE, GET_VALUES_FROM_OBJECT_BY_KEY, map_to_download_db } = require('./DB.js');
 
@@ -14,7 +14,7 @@ if (!fs.existsSync(`${download_path}`)) { fs.mkdirSync(`${download_path}`, {recu
 async function beatmap_download(id, localpath){
     console.log(`try download ${path.basename(localpath)}`);
     return new Promise( async(resolve,rej)=>{
-        await v2.beatmap.download(id, localpath).then((result)=>{
+        await v2.beatmap.set.download(id, localpath).then((result)=>{
             if (typeof result == 'string'){
                 var stats = fs.statSync(localpath);
                 console.log(`Filesize: ${stats.size/1024} KB`);

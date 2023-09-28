@@ -1,4 +1,4 @@
-const { v2, auth, tools, v1 } = require ('osu-api-extended');
+const { v2, auth } = require ('osu-api-extended');
 
 const { osu_api_error_restart_ms, OSU_LOGIN, OSU_PASSWORD } = require('./config.js');
 
@@ -17,8 +17,8 @@ module.exports = {
 
     get_beatmap_info: async function(beatmapsetid){
         try{
-
-            return await v2.beatmap.set(beatmapsetid).catch(reason=> { return reason; });
+            console.log(beatmapsetid)
+            return await v2.beatmap.set.details(beatmapsetid).catch(reason=> { return reason; });
 
         }
         catch (e){
