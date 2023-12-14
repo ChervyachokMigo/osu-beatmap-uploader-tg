@@ -1,0 +1,1 @@
+SELECT DISTINCT osu_beatmap_pps.md5, beatmap_data.ranked FROM osu_beatmaps.osu_beatmap_pps JOIN beatmap_data ON beatmap_data.md5=osu_beatmap_pps.md5;
