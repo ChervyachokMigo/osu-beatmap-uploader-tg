@@ -11,8 +11,9 @@ const { osusongs } = require('./config.js');
 var beatmapsets = [];
 
 async function answerFolder(folders){
-    var variants_text = [];
-    var variants = [];
+    var variants_text = ['0. skip'];
+    var variants = [0];
+
     for (let i = 1; i < folders.length + 1; i++ ){
         variants.push(i);
         variants_text.push(`${i}. ${folders[i-1]}`);
@@ -36,7 +37,7 @@ async function afterscan(){
         //console.log(beatmapsetCopies)
         //console.log(folders)
         let user_answer = Number(await answerFolder(folders));
-        if (user_answer>0 && user_answer<=folders.length){
+        if (user_answer > 0 && user_answer <= folders.length){
             console.log('вы выбрали папку', folders[user_answer-1]);
             for (let folder of folders){
                 if (folder !== folders[user_answer-1]){
