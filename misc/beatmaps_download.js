@@ -3,13 +3,12 @@ const fs = require('fs');
 const path = require(`path`);
 
 var { v2 } = require ('osu-api-extended');
-const { init_osu, get_beatmap_info } = require('./check_map.js');
-const { prepareDB, MYSQL_GET_ALL, MYSQL_DELETE, GET_VALUES_FROM_OBJECT_BY_KEY, map_to_download_db } = require('./DB.js');
 
-const mainpath = path.dirname(process.argv[1]);
-const download_path = `${mainpath}\\beatmaps`;
+const { init_osu, get_beatmap_info } = require('../tools/check_map.js');
+const { prepareDB, MYSQL_GET_ALL, MYSQL_DELETE, map_to_download_db } = require('../tools/DB.js');
+const { escapeString, checkDir, GET_VALUES_FROM_OBJECT_BY_KEY } = require('../tools/misc.js');
 
-if (!fs.existsSync(`${download_path}`)) { fs.mkdirSync(`${download_path}`, {recursive: true});}
+const download_path = path.join(path.dirname(process.argv[1]), 'beatmaps');
 
 async function beatmap_download(id, localpath){
     console.log(`try download ${path.basename(localpath)}`);
@@ -36,14 +35,11 @@ async function beatmap_download(id, localpath){
     });
 }
 
-function escapeString  (text){
-    return text.replace(/[&\/\\#+$~%'":*?<>{}|]/g, '');
-}
-
 async function main(){
     await prepareDB();
     await init_osu();
 
+    checkDir(download_path);
     
     const maps_to_download = GET_VALUES_FROM_OBJECT_BY_KEY( await MYSQL_GET_ALL(map_to_download_db), 'beatmapset_id');
 

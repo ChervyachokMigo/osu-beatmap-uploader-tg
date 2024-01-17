@@ -1,10 +1,13 @@
-const TelegramBot = require('node-telegram-bot-api');
-const { tg_token, osucharts, tg_bot_restart_after_error_ms, osusongs, messages_delay } = require('./config.js');
-require('colors');
 const fs = require('fs');
-
 const { exec } = require('child_process');
+require('colors');
+const TelegramBot = require('node-telegram-bot-api');
+
 const { keypress } = require('./keypress.js');
+
+const { tg_token, osucharts, tg_bot_restart_after_error_ms, osusongs, messages_delay } = require('../data/config.js');
+const { last_beatmap_path, error_log_path } = require('../misc/settings.js');
+const path = require('path');
 
 const no_bg_image = `https://www.peoples.ru/technics/programmer/dean_herbert/PH67uu7hlg6Ax.png`;
 
@@ -18,7 +21,7 @@ bot.on('polling_error', async (error) => {
 
 bot.on('message', (msg) => {
     bot.sendMessage(msg.chat.id, `иди на ${osucharts}`);
-});
+});;
 
 async function sendImage(url, caption){
     var photoMessage;
@@ -45,17 +48,17 @@ async function sendAudio(url){
 }
 
 async function sendOsz(beatmapset, beatmap_message) {
+    const {id, localfolder, osz_filename, osz_file_buffer } = beatmapset;
     try {
-        await bot.sendDocument(osucharts, beatmapset.osz_file_buffer, {}, { contentType: 'x-osu-beatmap-archive', filename: beatmapset.osz_filename });
-        fs.writeFileSync('lastbeatmap.txt', beatmapset.localfolder, { encoding: 'utf-8' });
+        await bot.sendDocument(osucharts, osz_file_buffer, {}, { contentType: 'x-osu-beatmap-archive', filename: osz_filename });
+        fs.writeFileSync(last_beatmap_path, localfolder, { encoding: 'utf-8' });
         await new Promise(res=>setTimeout(res, messages_delay));
         return true;
     } catch (e) {
-        console.log(' E невозможно отправить карту'.red, beatmapset.id);        
-        let absolute_folder_path = `${osusongs}\\${beatmapset.localfolder}`.replaceAll('/','\\');
+        console.log(' E невозможно отправить карту'.red, id);        
+        const absolute_folder_path = path.join(osusongs, localfolder);
 
-        fs.appendFileSync('error_file.txt', absolute_folder_path + '\n')
-        fs.appendFileSync('error_file.txt', e.toString() + '\n')
+        fs.appendFileSync(error_log_path, `${absolute_folder_path}\n${e.toString()}\n` )
 
         exec(`explorer.exe "${absolute_folder_path}"`);
         

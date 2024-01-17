@@ -1,6 +1,6 @@
 const { v2, auth } = require ('osu-api-extended');
 
-const { osu_api_error_restart_ms, OSU_LOGIN, OSU_PASSWORD } = require('./config.js');
+const { osu_api_error_restart_ms, OSU_LOGIN, OSU_PASSWORD } = require('../data/config.js');
 
 module.exports = {
     v2: function (){

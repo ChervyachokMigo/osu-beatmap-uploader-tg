@@ -1,4 +1,5 @@
 module.exports = {
+    messages_delay: 4500,
     tg_bot_restart_after_error_ms: 5000,
     osu_api_error_restart_ms: 10000,
 
@@ -7,13 +8,15 @@ module.exports = {
     OSU_CLIENT_ID: 0, 
     OSU_APP_KEY: '',
 
+    OSU_LOGIN: '',
+	OSU_PASSWORD: '',
+
     DB_HOST: `localhost`, 
     DB_PORT: `3306`, 
     DB_USER: ``, 
     DB_PASSWORD: ``, 
     DB_NAME: `tg_bot`,
 
-    
-    osusongs: 'D:/OsuSongs',
+    osusongs: 'D:\\osu!\\Songs',
     osucharts: '@osucharts',
 }

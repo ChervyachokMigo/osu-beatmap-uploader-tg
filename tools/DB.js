@@ -1,5 +1,5 @@
 
-const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } = require("./config.js");
+const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } = require("../data/config.js");
 
 const { Sequelize, DataTypes } = require('@sequelize/core');
 
@@ -150,27 +150,17 @@ function MYSQL_GET_ALL_RESULTS_TO_ARRAY(mysqldata){
     return res;
 }
 
-
-function GET_VALUES_FROM_OBJECT_BY_KEY (arrayobject, valuekey){
-    var res = [];
-    for (let data of arrayobject){
-        res.push(data[valuekey]);
-    }
-    return res;
-}
-
 module.exports = {
-    prepareDB: prepareDB,
-    MYSQL_SAVE: MYSQL_SAVE,
-    MYSQL_GET_ONE: MYSQL_GET_ONE,
-    MYSQL_DELETE: MYSQL_DELETE,
-    MYSQL_GET_ALL: MYSQL_GET_ALL,
+    prepareDB,
+    MYSQL_SAVE,
+    MYSQL_GET_ONE,
+    MYSQL_DELETE,
+    MYSQL_GET_ALL,
 
-    MYSQL_GET_ALL_RESULTS_TO_ARRAY: MYSQL_GET_ALL_RESULTS_TO_ARRAY,
-    GET_VALUES_FROM_OBJECT_BY_KEY: GET_VALUES_FROM_OBJECT_BY_KEY,
+    MYSQL_GET_ALL_RESULTS_TO_ARRAY,
 
-    sended_map_db: sended_map_db,
-    map_to_download_db: map_to_download_db,
-    map_not_found: map_not_found,
-    map_too_long: map_too_long,
+    sended_map_db,
+    map_to_download_db,
+    map_not_found,
+    map_too_long,
 }

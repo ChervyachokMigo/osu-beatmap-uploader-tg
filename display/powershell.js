@@ -62,7 +62,6 @@ powershell.stdout.on('data', function (data) {
                                 progessbar.tasks.push(file_upload_progress_info );
                             } else {
                                 progessbar.tasks[2] = file_upload_progress_info;
-                               
                             }
                         
                         progessbar.PrintProcents(file_procent);

@@ -1,5 +1,7 @@
 require('colors');
-var log = console.log.bind(console)
+
+const log = console.log.bind(console);
+
 module.exports = {
 	progressbar_default: "█",
 	progressbar_empty_default: "_",
@@ -25,10 +27,13 @@ module.exports = {
 		this.progressbar_empty = this.progressbar_empty_default.substring(0, this.progressbar_length - progressbar_count);
 		
 		console.clear();
-		log ("[UPLOADING]")
+
+		log ("[UPLOADING]");
+
 		for (let task of this.tasks){
 			log (task)
 		}
+		
 		log ("╔".gray+'═'.repeat(this.progressbar_length).gray+"╗".gray);
 		log ("║".gray+this.progressbar+this.progressbar_empty.black+"║".gray);
 		log ("╚".gray+'═'.repeat(this.progressbar_length).gray+"╝".gray);

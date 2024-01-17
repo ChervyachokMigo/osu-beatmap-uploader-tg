@@ -4,9 +4,9 @@ const path = require('path');
 
 require('colors');
 
-const { keypress } = require('./keypress.js');
+const { keypress } = require('../tools/keypress.js');
 
-const { osusongs } = require('./config.js');
+const { osusongs } = require('../data/config.js');
 
 var beatmapsets = [];
 

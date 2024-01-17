@@ -1,5 +1,6 @@
 require('colors');
-const { get_date_string, GET_VALUES_FROM_OBJECT_BY_KEY } = require("./tools");
+
+const { get_date_string, GET_VALUES_FROM_OBJECT_BY_KEY } = require('./misc');
 
 function makeCaption(beatmapset, short = 0) {
     var caption = ``;
