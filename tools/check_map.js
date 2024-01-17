@@ -1,3 +1,5 @@
+const dashboard = require('dashboard_framework');
+
 const { v2, auth } = require ('osu-api-extended');
 
 const { osu_api_error_restart_ms, OSU_LOGIN, OSU_PASSWORD } = require('../data/config.js');
@@ -8,11 +10,14 @@ module.exports = {
     },
 
     init_osu: async function (){     
-        var token = await auth.login_lazer(OSU_LOGIN, OSU_PASSWORD);
+        await dashboard.change_status({name: 'osu_auth', status: 'auth'});
+        const token = await auth.login_lazer(OSU_LOGIN, OSU_PASSWORD);
         if (typeof token.access_token === 'undefined'){
+            await dashboard.change_status({name: 'osu_auth', status: 'off'});
             await new Promise(resolve => setTimeout(resolve, osu_api_error_restart_ms));
             throw new Error('osu not auth. restart');
         }
+        await dashboard.change_status({name: 'osu_auth', status: 'on'});
     },
 
     get_beatmap_info: async function(beatmapsetid){

@@ -2,6 +2,7 @@
 :loop
 title "tg osu maps"
 
-node --no-deprecation index.js 
+npm run start
+
 goto loop
 pause

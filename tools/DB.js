@@ -1,7 +1,8 @@
+const { Sequelize, DataTypes } = require('@sequelize/core');
+const dashboard = require('dashboard_framework');
 
 const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } = require("../data/config.js");
 
-const { Sequelize, DataTypes } = require('@sequelize/core');
 
 const mysql = new Sequelize( DB_NAME, DB_USER, DB_PASSWORD, { 
     dialect: `mysql`,
@@ -30,23 +31,23 @@ const map_too_long = mysql.define ('map_too_long', {
 
 async function prepareDB (){
     try {
-        console.log(`База данных`,`Подготовка..`)
-        console.time('db')
+        console.log(`База данных`,`Подготовка..`);
+        await dashboard.change_status({name: 'db_ready', status: 'processing'});
         const mysql_checkdb = require('mysql2/promise');
         const connection = await mysql_checkdb.createConnection(`mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}`);
         await connection.query(`CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;`);
 
     } catch (e){
-        console.timeEnd('db')
+        await dashboard.change_status({name: 'db_ready', status: 'not'});
         if (e.code === 'ECONNREFUSED' || e.name === `SequelizeConnectionRefusedError`){
             throw new Error('Нет доступа к базе');
         } else {
             throw new Error(`ошибка базы: ${e}`);
         }
     }
-    await mysql.sync({ logging: ''})
-    console.log(`База данных`,`Подготовка завершена`)
-    console.timeEnd('db');
+    await mysql.sync({ logging: ''});
+    console.log(`База данных`,`Подготовка завершена`);
+    await dashboard.change_status({name: 'db_ready', status: 'ready'});
 }
 
 async function MYSQL_SAVE( MysqlModel, keys, values){

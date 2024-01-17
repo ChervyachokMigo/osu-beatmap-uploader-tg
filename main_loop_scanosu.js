@@ -1,13 +1,16 @@
 
 const path = require('path');
 require('colors');
+const { readdir } = require('fs');
+
+const dashboard = require('dashboard_framework');
+
 const { get_last_beatmap, clear_last_beatmap } = require("./tools/last_beatmap.js");
 const { sendNewBeatmap } = require("./tools/sendNewBeatmap.js");
 const { makeOsz } = require('./tools/makeOsz.js');
 const { beatmaps_lists_add } = require('./tools/beatmaps_lists.js');
 const { osusongs } = require('./data/config.js');
 const { readSongFolder } = require('./readSongFolder.js');
-const { readdir } = require('fs');
 
 let start_from_last_beatmap = true;
 
@@ -37,6 +40,12 @@ async function main_loop_scanosu() {
             if (start_from_last_beatmap) start_from_last_beatmap = false;
             if (lastbeatmap === folder) continue;
 
+            await dashboard.change_text_item({
+                name: 'folder', 
+                item_name: 'current', 
+                text: `[${lastfolder.number}/${lastfolder.length}] ${folder}`
+            });
+
             //console.clear();
             //console.log('Осталось просканировать папок:', songsFiles.length-lastfolder.number, '/', songsFiles.length, ((songsFiles.length-lastfolder.number) / songsFiles.length * 100).toFixed(2)+'%')
             //console.log(lastfolder.number, 'сканирование папки', folder);
@@ -51,6 +60,23 @@ async function main_loop_scanosu() {
             const beatmapset_osz = await makeOsz(beatmapset);
 
             if (beatmapset_osz) {
+                await dashboard.css_apply({
+                    selector: 'body', 
+                    prop: 'background-image', 
+                    value: `url(https://assets.ppy.sh/beatmaps/${beatmapset_osz.id}/covers/raw.jpg)`
+                });
+
+                await dashboard.emit_event({
+                    feedname: 'events',
+                    type: 'beatmap',
+                    title: `${beatmapset_osz.title}`,
+                    desc: `${beatmapset_osz.artist}`,
+                    url: {
+                        href: `https://osu.ppy.sh/beatmapsets/${beatmapset_osz.id}`,
+                    },
+                    icon: `https://assets.ppy.sh/beatmaps/${beatmapset_osz.id}/covers/card.jpg`
+                });
+
                 if (await sendNewBeatmap(beatmapset_osz, lastfolder)) {
                     await beatmaps_lists_add('sended', beatmapset_osz.id);
                 }
@@ -60,6 +86,7 @@ async function main_loop_scanosu() {
         }
 
         console.log('Все карты были просканированы'.yellow);
+        await dashboard.change_status({name: 'action', status: 'end'});
         clear_last_beatmap();
         await new Promise(resolve => setTimeout(resolve, 86400000));
     });

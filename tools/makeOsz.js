@@ -1,6 +1,9 @@
 const { osusongs } = require('../data/config.js');
 const path = require('path');
 const zip = require('zip-dir');
+
+const dashboard = require('dashboard_framework');
+
 const { tg_file_length_max } = require('../misc/consts.js');
 const { beatmaps_lists_add } = require('./beatmaps_lists.js');
 const { escapeString } = require('./misc.js');
@@ -14,12 +17,13 @@ async function makeOsz(args) {
     const { id, artist, title, localfolder } = args;
     const folder_path = path.join(osusongs, localfolder);
 
+    await dashboard.change_status({name: 'action', status: 'make_osz'});
+
     const osz_filename = make_osz_filename({ id, artist, title });
 
     console.log(' * создание osz архива карты', osz_filename);
 
     console.time('osz create');
-
     const osz_file_buffer = await zip(folder_path);
     console.timeEnd('osz create');
 

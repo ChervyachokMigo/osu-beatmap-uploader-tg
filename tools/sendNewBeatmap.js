@@ -1,5 +1,7 @@
 const { powershell_sended_calc_start, powershell_set_filesize, powershell_sended_calc_end } = require('../display/powershell.js');
 
+const dashboard = require('dashboard_framework');
+
 const { makeCaption } = require("./makeCaption.js");
 const { sendImage, sendAudio, sendOsz } = require("./bot.js");
 const { Megabyte } = require('../misc/consts.js');
@@ -17,12 +19,15 @@ async function sendNewBeatmap(beatmapset, lastfolder) {
         caption_limit++;
     } while (typeof caption !== 'string');
 
+    await dashboard.change_status({name: 'action', status: 'send_desc'});
     console.log(' * отправка бг', id);
     const photoMessage = await sendImage(`https://assets.ppy.sh/beatmaps/${id}/covers/raw.jpg`, caption);
 
+    await dashboard.change_status({name: 'action', status: 'send_preview'});
     console.log(' * отправка превью', id);
     const previewMessage = sendAudio(`https://b.ppy.sh/preview/${id}.mp3`);
 
+    await dashboard.change_status({name: 'action', status: 'send_osz'});
     console.log(' * отправка osz файла карты', osz_filename);
 
     const osz_file_size = osz_file_buffer.length / Megabyte;

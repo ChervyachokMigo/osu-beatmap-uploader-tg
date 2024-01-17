@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node --no-deprecation index.js "
+    "start": "start http://localhost:4461 & node --no-deprecation index.js "
   },
   "author": "",
   "license": "ISC",

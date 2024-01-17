@@ -1,13 +1,14 @@
 const { readdirSync } = require('fs');
 const path = require('path');
 require('colors');
+
+const dashboard = require('dashboard_framework');
+
 const { get_beatmap_info } = require('./tools/check_map.js');
 const { GET_VALUES_FROM_OBJECT_BY_KEY } = require('./tools/misc.js');
 const { readBeatmap } = require("./tools/readBeatmap.js");
-const { beatmaps_lists_add, beatmaps_lists_find_index } = require('./tools/beatmaps_lists.js');
+const { beatmaps_lists_add, is_betamap_in_lists } = require('./tools/beatmaps_lists.js');
 const { osu_api_error_restart_ms } = require('./data/config.js');
-
-
 
 async function readSongFolder(folder_osusongs, localfolder) {
 
@@ -15,23 +16,7 @@ async function readSongFolder(folder_osusongs, localfolder) {
 
     if (beatmapset_id > 0) {
 
-        if (beatmaps_lists_find_index('sended', beatmapset_id) > -1) {
-            //console.log(' S карта уже была отправлена'.yellow, beatmapset_id);
-            return null;
-        }
-
-        if (beatmaps_lists_find_index('to_download', beatmapset_id) > -1) {
-            //console.log(' S карта в списке загрузки'.yellow, beatmapset_id);
-            return null;
-        }
-
-        if (beatmaps_lists_find_index('not_found', beatmapset_id) > -1) {
-            //console.log(' S о карте нет информации на банчо'.yellow, beatmapset_id);
-            return null;
-        }
-
-        if (beatmaps_lists_find_index('too_long', beatmapset_id) > -1) {
-            //console.log(' S карта будет пропущена из-за ограничения телеграмма в 50 мегабайт'.yellow, beatmapset_id);
+        if (is_betamap_in_lists(beatmapset_id)){
             return null;
         }
 
@@ -55,10 +40,13 @@ async function readSongFolder(folder_osusongs, localfolder) {
     const beatmap_files = readdirSync(absolute_folder_path, { encoding: 'utf-8' });
 
     if (beatmap_files && beatmap_files.length && beatmap_files.length > 0) {
+
+        await dashboard.change_status({name: 'action', status: 'read_folder'});
+
         for (let filename of beatmap_files) {
             if (path.extname(filename).toLowerCase() === '.osu') {
                 console.log(' * чтение карты', filename);
-                let beatmap_info = readBeatmap(`${absolute_folder_path}/${filename}`);
+                let beatmap_info = readBeatmap( path.join(absolute_folder_path, filename) );
 
                 if (!isNaN(beatmapset.id) && beatmapset.id == 0) {
                     beatmapset.id = Number(beatmap_info.beatmapsetID);
@@ -88,11 +76,11 @@ async function readSongFolder(folder_osusongs, localfolder) {
         if (beatmapset.beatmap.length > 0 && beatmapset.id > 0) {
             console.log(' * найдено ', beatmapset.beatmap.length, 'карт');
             console.log(' * запрос информации о карте на банчо', beatmapset.id);
-            console.time('bancho request');
+
             let bancho_beatmap_info = await get_beatmap_info(beatmapset.id);
 
             console.log(' * [debug] * bancho_beatmap_info id'.yellow, bancho_beatmap_info.id);
-            console.timeEnd('bancho request');
+
             if (bancho_beatmap_info.authentication) {
                 console.log('osu not auth. restart');
                 await new Promise(resolve => setTimeout(resolve, osu_api_error_restart_ms));

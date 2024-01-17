@@ -1,5 +1,4 @@
-const { MYSQL_SAVE, sended_map_db } = require('../tools/DB.js');
-
+const { MYSQL_SAVE, sended_map_db } = require('../../tools/DB.js');
 
 const fs = require( 'fs');
 
