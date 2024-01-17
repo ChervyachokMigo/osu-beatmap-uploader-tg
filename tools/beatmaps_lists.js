@@ -1,4 +1,5 @@
-const { MYSQL_GET_ALL_RESULTS_TO_ARRAY, MYSQL_GET_ALL, sended_map_db, map_to_download_db, map_not_found, map_too_long } = require("./DB");
+const { MYSQL_GET_ALL_RESULTS_TO_ARRAY, MYSQL_GET_ALL, 
+    sended_map_db, map_to_download_db, map_not_found, map_too_long } = require("./DB");
 const { GET_VALUES_FROM_OBJECT_BY_KEY } = require("./misc");
 
 const beatmaps_lists = {
@@ -6,6 +7,13 @@ const beatmaps_lists = {
     to_download: [],
     not_found: [],
     too_long: []
+};
+
+const models = {    
+    sended: sended_map_db,
+    to_download: map_to_download_db,
+    not_found: map_not_found,
+    too_long: map_too_long
 };
 
 const init_beatmap_lists = async() => {
@@ -18,8 +26,10 @@ const init_beatmap_lists = async() => {
 
 module.exports = {
     init_beatmap_lists,
-    beatmaps_lists_add: (name, id) => {
+    beatmaps_lists_add: async (name, id) => {
+        const key_value = { beatmapset_id: id };
         beatmaps_lists[name].push(id);
+        await MYSQL_SAVE(models[name], key_value , key_value);
     },
     beatmaps_lists_find_index: (name, id) => {
         return beatmaps_lists[name].findIndex( v => v === id);

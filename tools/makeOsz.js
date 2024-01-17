@@ -1,5 +1,4 @@
 const { osusongs } = require('../data/config.js');
-const { MYSQL_SAVE, map_too_long } = require('./DB.js');
 const path = require('path');
 const zip = require('zip-dir');
 const { tg_file_length_max } = require('../misc/consts.js');
@@ -26,7 +25,6 @@ async function makeOsz(args) {
 
     if (osz_file_buffer.length > tg_file_length_max) {
         console.log(' S карта будет пропущена из-за ограничения телеграмма в 50 мегабайт'.red, id);
-        await MYSQL_SAVE(map_too_long, { beatmapset_id: id }, { beatmapset_id: id });
         beatmaps_lists_add('too_long', id);
         return null;
     }
