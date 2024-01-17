@@ -25,7 +25,7 @@ async function sendNewBeatmap(beatmapset, lastfolder) {
 
     await dashboard.change_status({name: 'action', status: 'send_preview'});
     console.log(' * отправка превью', id);
-    const previewMessage = sendAudio(`https://b.ppy.sh/preview/${id}.mp3`);
+    const previewMessage = await sendAudio(`https://b.ppy.sh/preview/${id}.mp3`);
 
     await dashboard.change_status({name: 'action', status: 'send_osz'});
     console.log(' * отправка osz файла карты', osz_filename);

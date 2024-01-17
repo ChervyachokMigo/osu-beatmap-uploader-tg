@@ -1,5 +1,5 @@
 module.exports = {
-    messages_delay: 4500,
+    messages_delay: 3000,
     tg_bot_restart_after_error_ms: 5000,
     osu_api_error_restart_ms: 10000,
 
