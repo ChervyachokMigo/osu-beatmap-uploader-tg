@@ -74,11 +74,12 @@ async function main_loop_scanosu() {
                     url: {
                         href: `https://osu.ppy.sh/beatmapsets/${beatmapset_osz.id}`,
                     },
-                    icon: `https://assets.ppy.sh/beatmaps/${beatmapset_osz.id}/covers/card.jpg`
+                    icon: `https://assets.ppy.sh/beatmaps/${beatmapset_osz.id}/covers/card.jpg`,
+                    sound: 'notify'
                 });
 
-                dashboard.play_notify('notify', 0.1);
-
+                //dashboard.play_notify('notify', 0.1);
+                //await new Promise(resolve => setTimeout(resolve, 86400000));
                 if (await sendNewBeatmap(beatmapset_osz, lastfolder)) {
                     await beatmaps_lists_add('sended', beatmapset_osz.id);
                 }
