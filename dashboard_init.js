@@ -63,5 +63,12 @@ const dashboard_init = async () => {
 
     await dashboard.css_apply({ selector: 'body', prop: 'background-color', value: '#313131' });
     await dashboard.create_feed({ feedname: 'events' });
+    dashboard.set_notify_sounds({
+        folder_path: 'sounds', 
+        sounds: [{
+            name: 'notify', 
+            file: 'notify.mp3'},
+        ]
+    });
 };
 exports.dashboard_init = dashboard_init;

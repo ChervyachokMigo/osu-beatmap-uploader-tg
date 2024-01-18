@@ -77,6 +77,8 @@ async function main_loop_scanosu() {
                     icon: `https://assets.ppy.sh/beatmaps/${beatmapset_osz.id}/covers/card.jpg`
                 });
 
+                dashboard.play_notify('notify', 0.1);
+
                 if (await sendNewBeatmap(beatmapset_osz, lastfolder)) {
                     await beatmaps_lists_add('sended', beatmapset_osz.id);
                 }
