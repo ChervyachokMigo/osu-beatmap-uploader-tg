@@ -22,12 +22,11 @@ module.exports = {
 
     get_beatmap_info: async function(beatmapsetid){
         try{
-            console.log(beatmapsetid)
             return await v2.beatmap.set.details(beatmapsetid).catch(reason=> { return reason; });
 
         }
         catch (e){
-            console.log(e);
+            console.error(beatmapsetid, 'get info failed');
             await new Promise(resolve => setTimeout(resolve, osu_api_error_restart_ms));
             throw new Error('error beatmap');
         }

@@ -33,13 +33,13 @@ async function sendNewBeatmap(beatmapset, lastfolder) {
     const osz_file_size = osz_file_buffer.length / Megabyte;
     
     console.log(' * Размер карты:', osz_file_size.toFixed(2) + ' МБ');
-    powershell_set_filesize(osz_file_size);
+    //powershell_set_filesize(osz_file_size);
 
-    powershell_sended_calc_start(osz_filename, lastfolder);
+    //powershell_sended_calc_start(osz_filename, lastfolder);
 
     const result = await sendOsz(beatmapset, {photoMessage, previewMessage});
 
-    powershell_sended_calc_end();
+    //powershell_sended_calc_end();
 
     console.log(']');
 

@@ -10,3 +10,4 @@ error_file.txt
 lastbeatmap.txt
 data/errors.txt
 data/last_beatmap
+data/logs/errors.txt

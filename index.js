@@ -8,7 +8,7 @@ const { dashboard_init } = require('./dashboard_init.js');
 
 const initialize = async() => {
     await dashboard_init();
-    powershell_call();
+    //powershell_call();
     await prepareDB();
     await init_osu();
     await init_beatmap_lists();
