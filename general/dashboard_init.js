@@ -1,6 +1,6 @@
 const dashboard = require('dashboard_framework');
 
-const { WEBPORT, SOCKETPORT, DEBUG_DASHBOARD } = require("./misc/settings");
+const { WEBPORT, SOCKETPORT, DEBUG_DASHBOARD } = require("../misc/settings");
 
 const colors = {
     enable: [59, 124, 255],
@@ -55,6 +55,7 @@ const dashboard_init = async () => {
                 { name: 'send_desc', color: colors.neutral, text: 'отправка описания' },
                 { name: 'send_preview', color: colors.neutral, text: 'отправка превью' },
                 { name: 'send_osz', color: colors.neutral, text: 'отправка карты' },
+                { name: 'waiting', color: colors.neutral, text: 'ожидание' },
                 { name: 'end', color: colors.neutral, text: 'завершено' },
             ]
         },

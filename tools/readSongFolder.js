@@ -4,11 +4,11 @@ require('colors');
 
 const dashboard = require('dashboard_framework');
 
-const { get_beatmap_info } = require('./tools/check_map.js');
-const { GET_VALUES_FROM_OBJECT_BY_KEY } = require('./tools/misc.js');
-const { readBeatmap } = require("./tools/readBeatmap.js");
-const { beatmaps_lists_add, is_betamap_in_lists } = require('./tools/beatmaps_lists.js');
-const { osu_api_error_restart_ms } = require('./data/config.js');
+const { get_beatmap_info } = require('./check_map.js');
+const { GET_VALUES_FROM_OBJECT_BY_KEY } = require('./misc.js');
+const { readBeatmap } = require("./readBeatmap.js");
+const { beatmaps_lists_add, is_betamap_in_lists } = require('./beatmaps_lists.js');
+const { osu_api_error_restart_ms } = require('../data/config.js');
 
 async function readSongFolder(folder_osusongs, localfolder) {
 

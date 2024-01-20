@@ -1,5 +1,3 @@
-const { powershell_sended_calc_start, powershell_set_filesize, powershell_sended_calc_end } = require('../display/powershell.js');
-
 const dashboard = require('dashboard_framework');
 
 const { makeCaption } = require("./makeCaption.js");

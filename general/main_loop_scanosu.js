@@ -5,12 +5,12 @@ const { readdir } = require('fs');
 
 const dashboard = require('dashboard_framework');
 
-const { get_last_beatmap, clear_last_beatmap } = require("./tools/last_beatmap.js");
-const { sendNewBeatmap } = require("./tools/sendNewBeatmap.js");
-const { makeOsz } = require('./tools/makeOsz.js');
-const { beatmaps_lists_add } = require('./tools/beatmaps_lists.js');
-const { osusongs } = require('./data/config.js');
-const { readSongFolder } = require('./readSongFolder.js');
+const { get_last_beatmap, clear_last_beatmap } = require("../tools/last_beatmap.js");
+const { sendNewBeatmap } = require("../tools/sendNewBeatmap.js");
+const { makeOsz } = require('../tools/makeOsz.js');
+const { beatmaps_lists_add } = require('../tools/beatmaps_lists.js');
+const { osusongs } = require('../data/config.js');
+const { readSongFolder } = require('../tools/readSongFolder.js');
 
 let start_from_last_beatmap = true;
 

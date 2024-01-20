@@ -3,8 +3,8 @@ const { powershell_call } = require('./display/powershell.js')
 const { prepareDB } = require('./tools/DB.js');
 const { init_osu } = require('./tools/check_map.js');
 const { init_beatmap_lists } = require('./tools/beatmaps_lists.js');
-const { main_loop_scanosu } = require('./main_loop_scanosu.js');
-const { dashboard_init } = require('./dashboard_init.js');
+const { main_loop_scanosu } = require('./general/main_loop_scanosu.js');
+const { dashboard_init } = require('./general/dashboard_init.js');
 
 const initialize = async() => {
     await dashboard_init();

@@ -2,6 +2,7 @@ const fs = require('fs');
 const { exec } = require('child_process');
 require('colors');
 const TelegramBot = require('node-telegram-bot-api');
+const dashboard = require('dashboard_framework');
 
 const { keypress } = require('./keypress.js');
 
@@ -52,6 +53,7 @@ async function sendOsz(beatmapset, beatmap_message) {
     try {
         await bot.sendDocument(osucharts, osz_file_buffer, {}, { contentType: 'x-osu-beatmap-archive', filename: osz_filename });
         fs.writeFileSync(last_beatmap_path, localfolder, { encoding: 'utf-8' });
+        await dashboard.change_status({name: 'action', status: 'waiting'});
         await new Promise(res=>setTimeout(res, messages_delay));
         return true;
     } catch (e) {
