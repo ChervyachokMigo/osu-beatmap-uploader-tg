@@ -11,13 +11,9 @@ const { makeOsz } = require('../tools/makeOsz.js');
 const { beatmaps_lists_add } = require('../tools/beatmaps_lists.js');
 const { osusongs } = require('../data/config.js');
 const { readSongFolder } = require('../tools/readSongFolder.js');
+const lastfolder = require('../tools/lastfolder.js');
 
 let start_from_last_beatmap = true;
-
-let lastfolder = {
-    number: 0,
-    length: 0,
-};
 
 async function main_loop_scanosu() {
 
@@ -29,27 +25,19 @@ async function main_loop_scanosu() {
 
         console.log('запуск с последней сохраненой точки'.yellow, lastbeatmap);
 
-        lastfolder.length = songsFiles.length;
+        lastfolder.set_len(songsFiles.length);
 
         for (let folder of songsFiles) {
 
-            lastfolder.number++;
+            lastfolder.inc();
 
             if (path.extname(folder) === '.osz') continue;
             if (start_from_last_beatmap && lastbeatmap && lastbeatmap.length > 0 && lastbeatmap !== folder) continue;
             if (start_from_last_beatmap) start_from_last_beatmap = false;
             if (lastbeatmap === folder) continue;
 
-            await dashboard.change_text_item({
-                name: 'folder', 
-                item_name: 'current', 
-                text: `[${lastfolder.number}/${lastfolder.length}] ${folder}`
-            });
-
-            //console.clear();
-            //console.log('Осталось просканировать папок:', songsFiles.length-lastfolder.number, '/', songsFiles.length, ((songsFiles.length-lastfolder.number) / songsFiles.length * 100).toFixed(2)+'%')
-            //console.log(lastfolder.number, 'сканирование папки', folder);
-            //if (lstatSync(osusongs+'/'+folder).isDirectory()){
+            
+            
             const beatmapset = await readSongFolder(osusongs, folder);
 
             if (!beatmapset) {
@@ -78,19 +66,18 @@ async function main_loop_scanosu() {
                     sound: 'notify'
                 });
 
-                //dashboard.play_notify('notify', 0.1);
-                //await new Promise(resolve => setTimeout(resolve, 86400000));
-                if (await sendNewBeatmap(beatmapset_osz, lastfolder)) {
+                if (await sendNewBeatmap(beatmapset_osz)) {
                     await beatmaps_lists_add('sended', beatmapset_osz.id);
                 }
             }
 
-            //}            
         }
 
         console.log('Все карты были просканированы'.yellow);
         await dashboard.change_status({name: 'action', status: 'end'});
+
         clear_last_beatmap();
+
         await new Promise(resolve => setTimeout(resolve, 86400000));
     });
 

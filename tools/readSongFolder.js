@@ -9,6 +9,7 @@ const { GET_VALUES_FROM_OBJECT_BY_KEY } = require('./misc.js');
 const { readBeatmap } = require("./readBeatmap.js");
 const { beatmaps_lists_add, is_betamap_in_lists } = require('./beatmaps_lists.js');
 const { osu_api_error_restart_ms } = require('../data/config.js');
+const lastfolder = require('./lastfolder.js');
 
 async function readSongFolder(folder_osusongs, localfolder) {
 
@@ -42,6 +43,14 @@ async function readSongFolder(folder_osusongs, localfolder) {
     if (beatmap_files && beatmap_files.length && beatmap_files.length > 0) {
 
         await dashboard.change_status({name: 'action', status: 'read_folder'});
+
+        await dashboard.change_text_item({
+            name: 'folder', 
+            item_name: 'current', 
+            text: `${lastfolder.get_info()} ${localfolder}`
+        });
+
+        console.log(`${lastfolder.get_info()} ${localfolder}`);
 
         for (let filename of beatmap_files) {
             if (path.extname(filename).toLowerCase() === '.osu') {
@@ -78,8 +87,6 @@ async function readSongFolder(folder_osusongs, localfolder) {
             console.log(' * запрос информации о карте на банчо', beatmapset.id);
 
             let bancho_beatmap_info = await get_beatmap_info(beatmapset.id);
-
-            console.log(' * [debug] * bancho_beatmap_info id'.yellow, bancho_beatmap_info.id);
 
             if (bancho_beatmap_info.authentication) {
                 console.log('osu not auth. restart');

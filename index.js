@@ -1,5 +1,4 @@
 
-const { powershell_call } = require('./display/powershell.js')
 const { prepareDB } = require('./tools/DB.js');
 const { init_osu } = require('./tools/check_map.js');
 const { init_beatmap_lists } = require('./tools/beatmaps_lists.js');
@@ -8,7 +7,6 @@ const { dashboard_init } = require('./general/dashboard_init.js');
 
 const initialize = async() => {
     await dashboard_init();
-    //powershell_call();
     await prepareDB();
     await init_osu();
     await init_beatmap_lists();
