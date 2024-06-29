@@ -35,8 +35,6 @@ async function main_loop_scanosu() {
             if (start_from_last_beatmap && lastbeatmap && lastbeatmap.length > 0 && lastbeatmap !== folder) continue;
             if (start_from_last_beatmap) start_from_last_beatmap = false;
             if (lastbeatmap === folder) continue;
-
-            
             
             const beatmapset = await readSongFolder(osusongs, folder);
 
@@ -67,7 +65,7 @@ async function main_loop_scanosu() {
                 });
 
                 if (await sendNewBeatmap(beatmapset_osz)) {
-                    await beatmaps_lists_add('sended', beatmapset_osz.id);
+                    await beatmaps_lists_add('sended_map', beatmapset_osz.id);
                 }
             }
 

@@ -10,7 +10,7 @@ function makeCaption(beatmapset, short = 0) {
     caption += beatmapset.creator ? `Creator: ${beatmapset.creator}\n` : '';
     caption += beatmapset.bancho_beatmap_info.status ? `Status: #${beatmapset.bancho_beatmap_info.status}\n` : '';
     caption += beatmapset.source ? `Source: ${beatmapset.source}\n` : '';
-    caption += beatmapset.tags ? `Tags: ${(beatmapset.tags.join(' '))}\n` : '';
+    caption += beatmapset.tags ? `Tags: ${(beatmapset.tags.filter(x=> x.length < 25).join(' '))}\n` : '';
     caption += beatmapset.bancho_beatmap_info.ranked_date ? `Date: ${get_date_string(new Date(beatmapset.bancho_beatmap_info.ranked_date))}\n` : '';
 
     var beatmap_srs = [];
@@ -36,9 +36,9 @@ function makeCaption(beatmapset, short = 0) {
         if (beatmap_counts < beatmaplimits) {
             caption += beatmap.difficulty + ' | ';
             if (beatmap.difficulty_rating !== undefined) {
-                caption += beatmap.difficulty_rating + '★ | ';
+                caption += beatmap.difficulty_rating + '★ \n ';
             }
-            caption += beatmap.md5_hash + '\n';
+            //caption += beatmap.md5_hash + '\n';
         }
         beatmap_counts++;
     }
@@ -68,6 +68,7 @@ function makeCaption(beatmapset, short = 0) {
     caption += `LINK: https://osu.ppy.sh/beatmapsets/${beatmapset.id}\n`;
 
     if (caption.length > 1024) {
+		console.log(caption)
         console.log(' L слишком длинное сообщение, пробуем убрать одну сложность'.yellow, beatmapset.id);
         return false;
     }

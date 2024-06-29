@@ -2,6 +2,7 @@
 /node_modules
 /beatmaps
 /.trash
+misc/beatmaps
 misc/sql_backup
 misc/config.js
 osu-beatmap-uploader-tg.code-workspace

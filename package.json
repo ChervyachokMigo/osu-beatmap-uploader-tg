@@ -12,11 +12,10 @@
     "@sequelize/core": "^7.0.0-alpha.10",
     "colors": "^1.4.0",
     "dashboard_framework": "github:ChervyachokMigo/dashboard_framework",
-    "express": "^4.18.2",
     "fs-extra": "^11.1.0",
     "md5-file": "^5.0.0",
-    "mysql2": "^2.3.3",
-    "node-telegram-bot-api": "^0.60.0",
+    "mysql-tools": "github:ChervyachokMigo/mysql-tools",
+    "node-telegram-bot-api": "^0.63.0",
     "osu-api-extended": "^2.5.12",
     "path": "^0.12.7",
     "zip-dir": "^2.0.0"

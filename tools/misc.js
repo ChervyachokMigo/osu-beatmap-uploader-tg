@@ -14,7 +14,7 @@ const formatAddZero = (t, symbols = 1) => {
 
 module.exports = {
     escapeString: (text) => {
-        return text.replace(/[&\/\\#+$~%'":*?<>{}|]/g, '');
+        return text? text.replace(/[&\/\\#+$~%'":*?<>{}|]/g, ''): '';
     },
 
     checkDir: (dir_path) => {

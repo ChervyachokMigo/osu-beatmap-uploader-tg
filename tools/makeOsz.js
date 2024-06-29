@@ -29,7 +29,7 @@ async function makeOsz(args) {
 
     if (osz_file_buffer.length > tg_file_length_max) {
         console.log(' S карта будет пропущена из-за ограничения телеграмма в 50 мегабайт'.red, id);
-        beatmaps_lists_add('too_long', id);
+        beatmaps_lists_add('long_map', id);
         return null;
     }
     return { ...args, osz_filename, osz_file_buffer };

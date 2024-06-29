@@ -95,7 +95,7 @@ async function readSongFolder(folder_osusongs, localfolder) {
             }
 
             if (!bancho_beatmap_info.beatmaps || bancho_beatmap_info.beatmaps.length == 0) {
-                await beatmaps_lists_add('not_found', beatmapset.id);
+                await beatmaps_lists_add('not_found_map', beatmapset.id);
                 console.log(' E нет информации о карте на банчо'.red, beatmapset.id);
                 return null;
             }
@@ -123,7 +123,7 @@ async function readSongFolder(folder_osusongs, localfolder) {
                     console.log('local md5', local_beatmap_md5s);
                     console.log(' E карты не совпадают.'.red, beatmapset.id);
                     console.log(' + будет добавлена в список загрузок'.yellow, beatmapset.id);
-                    await beatmaps_lists_add('to_download', beatmapset.id);
+                    await beatmaps_lists_add('download_map', beatmapset.id);
                     return null;
                 }
             }

@@ -15,7 +15,8 @@ module.exports = {
     DB_PORT: `3306`, 
     DB_USER: ``, 
     DB_PASSWORD: ``, 
-    DB_NAME: `tg_bot`,
+    DB_TELEGRAM: `tg_bot`,
+	DB_BEATMAPS: `osu_beatmaps`,
 
     osusongs: 'D:\\osu!\\Songs',
     osucharts: '@osucharts',

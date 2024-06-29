@@ -1,2 +1,2 @@
-node --no-deprecation misc\beatmaps_download.js
+node --no-deprecation beatmaps_download.js
 pause

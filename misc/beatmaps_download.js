@@ -5,8 +5,9 @@ const path = require(`path`);
 var { v2 } = require ('osu-api-extended');
 
 const { init_osu, get_beatmap_info } = require('../tools/check_map.js');
-const { prepareDB, MYSQL_GET_ALL, MYSQL_DELETE, map_to_download_db } = require('../tools/DB.js');
+
 const { escapeString, checkDir, GET_VALUES_FROM_OBJECT_BY_KEY } = require('../tools/misc.js');
+const { prepareDB } = require('../tools/DB.js');
 
 const download_path = path.join(path.dirname(process.argv[1]), 'beatmaps');
 
@@ -41,7 +42,7 @@ async function main(){
 
     checkDir(download_path);
     
-    const maps_to_download = GET_VALUES_FROM_OBJECT_BY_KEY( await MYSQL_GET_ALL(map_to_download_db), 'beatmapset_id');
+    const maps_to_download = GET_VALUES_FROM_OBJECT_BY_KEY( await MYSQL_GET_ALL({ action: 'download_map'}), 'beatmapset_id');
 
     if (maps_to_download.length == 0){
         console.error('nothing to downloads.');
@@ -66,7 +67,7 @@ async function main(){
 
         if (typeof download_result == 'string') {
             console.log('download complete');
-            await MYSQL_DELETE(map_to_download_db, {beatmapset_id: beatmapsetid} );
+            await MYSQL_DELETE( 'download_map', { beatmapset_id: beatmapsetid });
         } else {
             if (download_result == false){
                 console.log('file unavailable');
