@@ -43,6 +43,11 @@ async function main_loop_scanosu() {
                 continue;
             }
 
+			if (beatmapset.creator === 'SadGod') {
+				console.log(' S карта автора SadGod будет пропущена.'.yellow);
+				continue;
+			}
+
             const beatmapset_osz = await makeOsz(beatmapset);
 
             if (beatmapset_osz) {
