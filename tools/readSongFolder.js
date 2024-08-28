@@ -1,5 +1,5 @@
-const { readdirSync } = require('fs');
-const path = require('path');
+const { readdirSync } = require('node:fs');
+const path = require('node:path');
 require('colors');
 
 const dashboard = require('dashboard_framework');

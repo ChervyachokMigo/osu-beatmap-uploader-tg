@@ -1,5 +1,5 @@
 const { osusongs } = require('../data/config.js');
-const path = require('path');
+const path = require('node:path');
 const zip = require('zip-dir');
 
 const dashboard = require('dashboard_framework');

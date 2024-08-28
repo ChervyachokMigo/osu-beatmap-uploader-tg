@@ -1,5 +1,5 @@
 
-const { MYSQL_SAVE, MYSQL_GET_ALL } = require('MYSQL-tools');
+const { MYSQL_SAVE, MYSQL_GET_ALL } = require('mysql-tools');
 
 const { GET_VALUES_FROM_OBJECT_BY_KEY } = require("./misc");
 

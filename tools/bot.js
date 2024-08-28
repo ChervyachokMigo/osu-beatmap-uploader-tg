@@ -1,5 +1,7 @@
-const fs = require('fs');
-const { exec } = require('child_process');
+const fs = require('node:fs');
+const path = require('node:path');
+const { exec } = require('node:child_process');
+
 require('colors');
 const TelegramBot = require('node-telegram-bot-api');
 const dashboard = require('dashboard_framework');
@@ -8,7 +10,6 @@ const { keypress } = require('./keypress.js');
 
 const { tg_token, osucharts, tg_bot_restart_after_error_ms, osusongs, messages_delay } = require('../data/config.js');
 const { last_beatmap_path, error_log_path } = require('../misc/settings.js');
-const path = require('path');
 
 const no_bg_image = `https://www.peoples.ru/technics/programmer/dean_herbert/PH67uu7hlg6Ax.png`;
 

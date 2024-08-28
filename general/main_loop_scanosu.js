@@ -1,7 +1,7 @@
 
-const path = require('path');
+const path = require('node:path');
 require('colors');
-const { readdir } = require('fs');
+const { readdir } = require('node:fs');
 
 const dashboard = require('dashboard_framework');
 

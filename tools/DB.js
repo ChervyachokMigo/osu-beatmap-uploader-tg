@@ -1,5 +1,5 @@
 const dashboard = require('dashboard_framework');
-const { prepareDB, prepareEND, telegram_prepare } = require('MYSQL-tools');
+const { prepareDB, prepareEND, telegram_prepare } = require('mysql-tools');
 
 const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_TELEGRAM, DB_BEATMAPS } = require("../data/config.js");
 

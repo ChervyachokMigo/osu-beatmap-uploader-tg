@@ -1,6 +1,6 @@
-const fs = require('fs');
+const fs = require('node:fs');
 const fse = require('fs-extra')
-const path = require('path');
+const path = require('node:path');
 
 require('colors');
 

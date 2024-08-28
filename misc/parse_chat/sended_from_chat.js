@@ -1,7 +1,7 @@
 
 const fs = require( 'fs');
 
-const { MYSQL_SAVE, select_mysql_model } = require('MYSQL-tools');
+const { MYSQL_SAVE, select_mysql_model } = require('mysql-tools');
 
 (async function(){
 
