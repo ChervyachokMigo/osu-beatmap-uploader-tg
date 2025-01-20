@@ -25,13 +25,23 @@ bot.on('message', (msg) => {
     bot.sendMessage(msg.chat.id, `иди на ${osucharts}`);
 });;
 
+async function sendMessage(text) {
+	let res = null;
+	try {
+        res = await bot.sendMessage(osucharts, text);
+    } catch (e) {
+        console.log(' E ошибка сообщения'.red);
+    }
+	return res;
+}
+
 async function sendImage(url, caption){
     var photoMessage;
     try {
-        photoMessage = await bot.sendPhoto(osucharts, url, { caption: caption });
+        photoMessage = await bot.sendPhoto(osucharts, url, { caption: caption, disable_notification: true });
     } catch (e) {
         console.log(' E нет бг'.red);
-        photoMessage = await bot.sendPhoto(osucharts, no_bg_image, { caption: caption });
+        photoMessage = await bot.sendPhoto(osucharts, no_bg_image, { caption: caption, disable_notification: true });
     }
     await new Promise(res=>setTimeout(res, messages_delay));
     return photoMessage;
@@ -40,7 +50,7 @@ async function sendImage(url, caption){
 async function sendAudio(url){
     var previewMessage;
     try {
-        previewMessage = await bot.sendAudio(osucharts, url);
+        previewMessage = await bot.sendAudio(osucharts, url, {disable_notification: true});
     } catch (e) {
         console.log(' E невозможно отправить превью'.red);
         previewMessage = false;
@@ -52,7 +62,7 @@ async function sendAudio(url){
 async function sendOsz(beatmapset, beatmap_message) {
     const {id, localfolder, osz_filename, osz_file_buffer } = beatmapset;
     try {
-        await bot.sendDocument(osucharts, osz_file_buffer, {}, { contentType: 'x-osu-beatmap-archive', filename: osz_filename });
+        await bot.sendDocument(osucharts, osz_file_buffer, {disable_notification: true}, { contentType: 'x-osu-beatmap-archive', filename: osz_filename });
         fs.writeFileSync(last_beatmap_path, localfolder, { encoding: 'utf-8' });
         await dashboard.change_status({name: 'action', status: 'waiting'});
         await new Promise(res=>setTimeout(res, messages_delay));
@@ -76,3 +86,4 @@ async function sendOsz(beatmapset, beatmap_message) {
 exports.sendImage = sendImage;
 exports.sendAudio = sendAudio;
 exports.sendOsz = sendOsz;
+exports.sendMessage = sendMessage;

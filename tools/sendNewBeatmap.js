@@ -10,6 +10,9 @@ async function sendNewBeatmap(beatmapset) {
     const {id, osz_filename, osz_file_buffer} = beatmapset;
     console.log('Данные карты будут отправлены на канал: ', id, '[');
 
+	// console.log('stop');
+	// process.exit();
+
     let caption;
     let caption_limit = 0;
     do {
