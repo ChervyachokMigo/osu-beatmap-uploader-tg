@@ -22,8 +22,8 @@ module.exports = {
 
     get_beatmap_info: async function(beatmapsetid){
         try{
+			console.log(` * [${beatmapsetid}] запрос информации о карте на банчо` );
             return await v2.beatmap.set.details(beatmapsetid).catch(reason=> { return reason; });
-
         }
         catch (e){
             console.error(beatmapsetid, 'get info failed');

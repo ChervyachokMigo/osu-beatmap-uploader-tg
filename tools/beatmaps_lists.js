@@ -31,10 +31,6 @@ module.exports = {
     is_betamap_in_lists: (id) => {
         for (let name of beatmaps_lists_names){
             if (beatmaps_lists[name].findIndex( v => v === id) > -1){
-                 //console.log(' S карта уже была отправлена'.yellow, beatmapset_id);
-                 //console.log(' S карта в списке загрузки'.yellow, beatmapset_id);
-                 //console.log(' S о карте нет информации на банчо'.yellow, beatmapset_id);
-                 //console.log(' S карта будет пропущена из-за ограничения телеграмма в 50 мегабайт'.yellow, beatmapset_id);
                 return true;
             }
         }

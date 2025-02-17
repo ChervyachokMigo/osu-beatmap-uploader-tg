@@ -14,9 +14,7 @@ const make_osz_filename = ({id, artist, title}) => {
 };
 
 async function makeOsz(args) {
-    const { id, artist, title, localfolder } = args;
-    const folder_path = path.join(osusongs, localfolder);
-
+	const { id, artist, title, absolute_path } = args;
     await dashboard.change_status({name: 'action', status: 'make_osz'});
 
     const osz_filename = make_osz_filename({ id, artist, title });
@@ -24,7 +22,7 @@ async function makeOsz(args) {
     console.log(' * создание osz архива карты', osz_filename);
 
     console.time('osz create');
-    const osz_file_buffer = await zip(folder_path);
+    const osz_file_buffer = await zip(absolute_path);
     console.timeEnd('osz create');
 
     if (osz_file_buffer.length > tg_file_length_max) {

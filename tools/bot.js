@@ -60,16 +60,16 @@ async function sendAudio(url){
 }
 
 async function sendOsz(beatmapset, beatmap_message) {
-    const {id, localfolder, osz_filename, osz_file_buffer } = beatmapset;
+    const {id, foldername, osz_filename, osz_file_buffer } = beatmapset;
     try {
         await bot.sendDocument(osucharts, osz_file_buffer, {disable_notification: true}, { contentType: 'x-osu-beatmap-archive', filename: osz_filename });
-        fs.writeFileSync(last_beatmap_path, localfolder, { encoding: 'utf-8' });
+        fs.writeFileSync(last_beatmap_path, foldername, { encoding: 'utf-8' });
         await dashboard.change_status({name: 'action', status: 'waiting'});
         await new Promise(res=>setTimeout(res, messages_delay));
         return true;
     } catch (e) {
         console.log(' E невозможно отправить карту'.red, id);        
-        const absolute_folder_path = path.join(osusongs, localfolder);
+        const absolute_folder_path = path.join(osusongs, foldername);
 
         fs.appendFileSync(error_log_path, `${absolute_folder_path}\n${e.toString()}\n` )
 

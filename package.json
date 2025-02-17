@@ -1,12 +1,12 @@
 {
   "name": "osu-beatmap-uploader-tg",
   "version": "1.0.0",
-  "description": "",
+  "description": "telegram bot for upload osu maps to channel https://t.me/osucharts",
   "main": "index.js",
   "scripts": {
     "start": "start http://localhost:4461 & node --no-deprecation index.js "
   },
-  "author": "",
+  "author": "ChervyachokMigo",
   "license": "ISC",
   "dependencies": {
     "colors": "^1.4.0",
@@ -16,6 +16,7 @@
     "mysql-tools": "github:ChervyachokMigo/mysql-tools",
     "node-telegram-bot-api": "^0.66.0",
     "osu-api-extended": "^2.5.12",
+    "osu-tools": "^0.1.66",
     "zip-dir": "^2.0.0"
   }
 }

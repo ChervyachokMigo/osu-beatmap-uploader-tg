@@ -48,7 +48,12 @@ async function main_loop_scanosu() {
 				continue;
 			}
 
-            const beatmapset_osz = await makeOsz(beatmapset);
+			const absolute_path = path.join(osusongs, folder);
+
+            const beatmapset_osz = await makeOsz({
+				...beatmapset,
+				absolute_path
+			});
 
             if (beatmapset_osz) {
                 await dashboard.css_apply({

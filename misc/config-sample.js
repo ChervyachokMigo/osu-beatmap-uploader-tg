@@ -19,5 +19,6 @@ module.exports = {
 	DB_BEATMAPS: `osu_beatmaps`,
 
     osusongs: 'D:\\osu!\\Songs',
+	osulaser: 'D:\\osu!laser',
     osucharts: '@osucharts',
 }

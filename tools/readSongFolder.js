@@ -34,7 +34,7 @@ async function readSongFolder(folder_osusongs, localfolder) {
         tags: '',
         creator: '',
         beatmap: [],
-        localfolder,
+        foldername: localfolder,
     };
 
     const absolute_folder_path = path.join(folder_osusongs, localfolder);

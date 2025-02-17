@@ -51,6 +51,7 @@ const dashboard_init = async () => {
             values: [
                 { name: 'init', color: colors.neutral, text: 'инициализация' },
                 { name: 'read_folder', color: colors.neutral, text: 'чтение папки' },
+				{ name: 'verify_beatmaps', color: colors.neutral, text: 'проверка карты' },
                 { name: 'make_osz', color: colors.neutral, text: 'создание osz' },
                 { name: 'send_desc', color: colors.neutral, text: 'отправка описания' },
                 { name: 'send_preview', color: colors.neutral, text: 'отправка превью' },

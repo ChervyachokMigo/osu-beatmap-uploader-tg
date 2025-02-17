@@ -34,9 +34,9 @@ function makeCaption(beatmapset, short = 0) {
 
     for (let beatmap of beatmapset.beatmap) {
         if (beatmap_counts < beatmaplimits) {
-            caption += beatmap.difficulty + ' | ';
+            caption += ' ' + beatmap.difficulty + ' | ';
             if (beatmap.difficulty_rating !== undefined) {
-                caption += beatmap.difficulty_rating + '★ \n ';
+                caption += beatmap.difficulty_rating + '★ \n';
             }
             //caption += beatmap.md5_hash + '\n';
         }

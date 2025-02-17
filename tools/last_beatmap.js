@@ -7,7 +7,7 @@ function get_last_beatmap() {
     try {
         res = readFileSync(last_beatmap_path, { encoding: 'utf-8' }).trim();
     } catch (e) {
-        console.log('последняя карта не сохранена, начинаем заново');
+        console.log('последняя карта не сохранена, начинаем сначала');
         //console.log(e);
     }
     return res;
