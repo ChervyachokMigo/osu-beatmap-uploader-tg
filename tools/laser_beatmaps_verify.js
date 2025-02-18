@@ -96,6 +96,8 @@ async function laser_beatmaps_verify(local_beatmapset) {
 		text: `${lastfolder.get_info()} ${foldername}`
 	});
 
+	console.log(`${lastfolder.get_info()} ${foldername}`);
+
 	console.log(' * запрос информации о карте на банчо', beatmapset.id);
 	const bancho_beatmapset = await get_beatmap_info(beatmapset.id);
 
