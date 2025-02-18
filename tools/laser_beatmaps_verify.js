@@ -4,13 +4,13 @@ require('colors');
 const dashboard = require('dashboard_framework');
 
 const { get_beatmap_info } = require('./check_map.js');
-const { GET_VALUES_FROM_OBJECT_BY_KEY } = require('./misc.js');
+const { GET_VALUES_FROM_OBJECT_BY_KEY, escapeString } = require('./misc.js');
 
 const { beatmaps_lists_add, is_betamap_in_lists } = require('./beatmaps_lists.js');
 const { osu_api_error_restart_ms } = require('../data/config.js');
 const lastfolder = require('./lastfolder.js');
 const { beatmap_modes, tg_file_length_max } = require('../misc/consts.js');
-const { get_beatmapset_files } = require('osu-tools');
+const { get_beatmapset_files, escape_string } = require('osu-tools');
 const { calculate_filesizes } = require('./calculate_filesizes.js');
 
 async function laser_beatmaps_verify(local_beatmapset) {
@@ -42,7 +42,7 @@ async function laser_beatmaps_verify(local_beatmapset) {
 		return null;
 	}
 
-	const foldername = `${beatmapset_id} ${beatmapset_metadata.Artist} - ${beatmapset_metadata.Title}`;
+	const foldername = escape_string(`${beatmapset_id} ${beatmapset_metadata.Artist} - ${beatmapset_metadata.Title}`);
 
 	const beatmapset = {
         id: beatmapset_id,

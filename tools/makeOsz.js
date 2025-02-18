@@ -6,10 +6,10 @@ const dashboard = require('dashboard_framework');
 
 const { tg_file_length_max } = require('../misc/consts.js');
 const { beatmaps_lists_add } = require('./beatmaps_lists.js');
-const { escapeString } = require('./misc.js');
+const { escape_string } = require('osu-tools');
 
 const make_osz_filename = ({id, artist, title}) => {
-    return `${id} ${artist? escapeString(artist) + ' - ': ''}${title? escapeString(title): ''}`
+    return escape_string(`${id} ${artist? artist + ' - ': ''}${title? title: ''}`)
         .substring(0, 56).trim().replaceAll(/[ ]+/gui, ' ') + '.osz';
 };
 
