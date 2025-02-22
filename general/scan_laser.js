@@ -1,7 +1,6 @@
 
 const path = require('node:path');
 require('colors');
-const { readdir } = require('node:fs');
 
 const dashboard = require('dashboard_framework');
 
@@ -10,9 +9,8 @@ const { sendNewBeatmap } = require("../tools/sendNewBeatmap.js");
 const { makeOsz } = require('../tools/makeOsz.js');
 const { beatmaps_lists_add } = require('../tools/beatmaps_lists.js');
 const { osulaser } = require('../data/config.js');
-const { readSongFolder } = require('../tools/readSongFolder.js');
 const lastfolder = require('../tools/lastfolder.js');
-const { open_realm, get_realm_objects, close_realm, set_laser_files_path, get_beatmapset_files, export_beatmapset } = require('osu-tools');
+const { open_realm, get_realm_objects, set_laser_files_path, export_beatmapset, laser_beatmap_status } = require('osu-tools');
 const { laser_beatmaps_verify } = require('../tools/laser_beatmaps_verify.js');
 const { checkDir } = require('../tools/misc.js');
 
@@ -25,7 +23,9 @@ async function scan_laser() {
 
 	const realm_path = path.join(osulaser, 'client.realm');
 	const realm = open_realm(realm_path);
-	const beatmapsets = [...get_realm_objects(realm, 'BeatmapSet')].sort((a, b) => a.OnlineID - b.OnlineID);
+	const beatmapsets = [...get_realm_objects(realm, 'BeatmapSet')]
+		.filter ( v => v.Status === laser_beatmap_status.Loved || v.Status === laser_beatmap_status.Approved || v.Status === laser_beatmap_status.Ranked)
+		.sort((a, b) => a.OnlineID - b.OnlineID);
 	set_laser_files_path(osulaser);
 
     //console.log(beatmapsets);
@@ -83,7 +83,6 @@ async function scan_laser() {
 	console.log('Все карты были просканированы'.yellow);
     await dashboard.change_status({name: 'action', status: 'end'});
 
-	close_realm();
     await new Promise(resolve => setTimeout(resolve, 86400000));
 
 }
