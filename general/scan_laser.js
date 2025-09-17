@@ -13,6 +13,7 @@ const lastfolder = require('../tools/lastfolder.js');
 const { open_realm, get_realm_objects, set_laser_files_path, export_beatmapset, laser_beatmap_status } = require('osu-tools');
 const { laser_beatmaps_verify } = require('../tools/laser_beatmaps_verify.js');
 const { checkDir } = require('../tools/misc.js');
+const clean_exported = require('../tools/clean_exported.js');
 
 let start_from_last_beatmap = true;
 
@@ -53,6 +54,7 @@ async function scan_laser() {
 			...verify_result,
 			absolute_path: exported_beatmapset.exported_path
 		});
+		clean_exported(exported_beatmapset.exported_path);
 
 		if (beatmapset_osz) {
 			await dashboard.css_apply({
