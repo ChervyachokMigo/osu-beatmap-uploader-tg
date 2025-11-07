@@ -35,10 +35,10 @@ async function sendMessage(text) {
 	return res;
 }
 
-async function sendImage(url, caption){
+async function sendImage(image, caption){
     var photoMessage;
     try {
-        photoMessage = await bot.sendPhoto(osucharts, url, { caption: caption, disable_notification: true });
+        photoMessage = await bot.sendPhoto(osucharts, image, { caption: caption, disable_notification: true });
     } catch (e) {
         console.log(' E нет бг'.red);
         photoMessage = await bot.sendPhoto(osucharts, no_bg_image, { caption: caption, disable_notification: true });

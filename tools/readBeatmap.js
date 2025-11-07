@@ -2,8 +2,29 @@ const fs = require('fs');
 const md5File = require('md5-file');
 
 const { beatmap_modes } = require("../misc/consts.js");
+const { parse_osu_file, osu_file_beatmap_property } = require('osu-tools');
+
+const beatmap_props = [
+    osu_file_beatmap_property.metadata_artist,
+    osu_file_beatmap_property.metadata_title,
+    osu_file_beatmap_property.metadata_creator,
+    osu_file_beatmap_property.metadata_version,
+    osu_file_beatmap_property.metadata_beatmap_id,
+    osu_file_beatmap_property.metadata_beatmapset_id,
+    osu_file_beatmap_property.general_gamemode,
+    osu_file_beatmap_property.metadata_source,
+    osu_file_beatmap_property.metadata_tags,
+    osu_file_beatmap_property.difficulty_Approach_Rate,
+    osu_file_beatmap_property.difficulty_Circle_Size,
+    osu_file_beatmap_property.difficulty_Health_Points_drain_rate,
+    osu_file_beatmap_property.difficulty_Overall_Difficulty,
+    osu_file_beatmap_property.events_backgrounds,
+    osu_file_beatmap_property.metadata_beatmap_md5
+]
 
 function readBeatmap(beatmapPath) {
+    //const beatmap_data = parse_osu_file(beatmapPath, beatmap_props, {is_hit_objects_only_count: true, is_parse_sliders: false });
+    //console.log('beatmap_data', beatmap_data);
     function getPropery(data) {
         var res = data.split(':');
         res.shift();

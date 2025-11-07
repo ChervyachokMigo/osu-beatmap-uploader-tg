@@ -54,13 +54,13 @@ async function scan_laser() {
 			...verify_result,
 			absolute_path: exported_beatmapset.exported_path
 		});
-		clean_exported(exported_beatmapset.exported_path);
 
 		if (beatmapset_osz) {
 			await dashboard.css_apply({
 				selector: 'body', 
 				prop: 'background-image', 
-				value: `url(https://assets.ppy.sh/beatmaps/${beatmapset_osz.id}/covers/raw.jpg)`
+				//value: `url(https://assets.ppy.sh/beatmaps/${beatmapset_osz.id}/covers/raw.jpg)`
+				value: `url(https://assets.ppy.sh/beatmaps/${beatmapset_osz.id}/covers/card.jpg)`,
 			});
 
 			await dashboard.emit_event({
@@ -79,6 +79,8 @@ async function scan_laser() {
 				await beatmaps_lists_add('sended_map', beatmapset_osz.id);
 			}
 		}
+
+		clean_exported(exported_beatmapset.exported_path);
 
 	}	
 

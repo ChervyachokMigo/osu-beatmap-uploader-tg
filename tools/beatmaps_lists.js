@@ -2,6 +2,7 @@
 const { MYSQL_SAVE, MYSQL_GET_ALL } = require('mysql-tools');
 
 const { GET_VALUES_FROM_OBJECT_BY_KEY } = require("./misc");
+const config = require('../data/config');
 
 const beatmaps_lists = {
     sended_map: [],
@@ -24,8 +25,10 @@ module.exports = {
     },
     
     beatmaps_lists_add: async (name, id) => {
-        beatmaps_lists[name].push(id);
-        await MYSQL_SAVE(name, { beatmapset_id: id });
+        if (config.is_save) {
+            beatmaps_lists[name].push(id);
+            await MYSQL_SAVE(name, { beatmapset_id: id });
+        }
     },
 
     is_betamap_in_lists: (id) => {

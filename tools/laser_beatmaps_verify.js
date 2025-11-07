@@ -67,7 +67,8 @@ async function laser_beatmaps_verify(local_beatmapset) {
 			length: v.Length
 		})),
         foldername,
-		laser_beatmapset: local_beatmapset
+		laser_beatmapset: local_beatmapset,
+		background: beatmapset_metadata.BackgroundFile
     };
 
 	if (beatmapset.tags) {
@@ -145,6 +146,7 @@ async function laser_beatmaps_verify(local_beatmapset) {
 	}
 
     beatmapset.bancho_beatmap_info = bancho_beatmapset;
+
 	return beatmapset;
 
 }
