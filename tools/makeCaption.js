@@ -17,9 +17,9 @@ function makeCaption(beatmapset, short = 0) {
     for (let i in beatmapset.beatmap) {
         let bancho_beatmap = beatmapset.bancho_beatmap_info.beatmaps.filter(val => beatmapset.beatmap[i].md5_hash === val.checksum);
         if (bancho_beatmap.length > 0) {
-
-            beatmapset.beatmap[i].difficulty_rating = Number(bancho_beatmap[0].difficulty_rating);
-            beatmap_srs.push(Math.trunc(Number(bancho_beatmap[0].difficulty_rating)));
+            let diff =  Number(bancho_beatmap[0].difficulty_rating);
+            beatmapset.beatmap[i].difficulty_rating = diff;
+            beatmap_srs.push(Math.trunc(diff));
         }
     }
 
@@ -36,7 +36,7 @@ function makeCaption(beatmapset, short = 0) {
         if (beatmap_counts < beatmaplimits) {
             caption += ' ' + beatmap.difficulty + ' | ';
             if (beatmap.difficulty_rating !== undefined) {
-                caption += beatmap.difficulty_rating + '★ \n';
+                caption += beatmap.difficulty_rating.toFixed(2) + '★ \n';
             }
             //caption += beatmap.md5_hash + '\n';
         }
